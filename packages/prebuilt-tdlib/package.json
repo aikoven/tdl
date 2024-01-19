@@ -1,5 +1,5 @@
 {
-  "name": "prebuilt-tdlib",
+  "name": "@aikoven/prebuilt-tdlib",
   "version": "0.0.1",
   "description": "Prebuilt TDLib libraries",
   "main": "index.js",
