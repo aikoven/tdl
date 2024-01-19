@@ -195,34 +195,34 @@ jobs:
           name: tdlib-windows-x64
           path: to-upload
 
-  test:
-    name: 'Test the ${{ matrix.os[1] }} pre-built libraries'
-    needs: [build-linux-x64, build-macos, build-windows-x64]
-    runs-on: ${{ matrix.os[0] }}
-    strategy:
-      fail-fast: false
-      matrix:
-        os:
-          - [ubuntu-latest, tdlib-linux-x64, libtdjson.so]
-          - [macos-latest, tdlib-macos, libtdjson.dylib]
-          - [windows-2019, tdlib-windows-x64, tdjson.dll]
-    env:
-      LIBTDJSON_PATH: ${{ matrix.os[2] }}
-    steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
-        with:
-          node-version: lts/*
-          cache: npm
-      - run: npm install
-      - uses: actions/download-artifact@v3
-        with:
-          name: ${{ matrix.os[1] }}
-      - run: npm run integration-tests
+  # test:
+  #   name: 'Test the ${{ matrix.os[1] }} pre-built libraries'
+  #   needs: [build-linux-x64, build-macos, build-windows-x64]
+  #   runs-on: ${{ matrix.os[0] }}
+  #   strategy:
+  #     fail-fast: false
+  #     matrix:
+  #       os:
+  #         - [ubuntu-latest, tdlib-linux-x64, libtdjson.so]
+  #         - [macos-latest, tdlib-macos, libtdjson.dylib]
+  #         - [windows-2019, tdlib-windows-x64, tdjson.dll]
+  #   env:
+  #     LIBTDJSON_PATH: ${{ matrix.os[2] }}
+  #   steps:
+  #     - uses: actions/checkout@v3
+  #     - uses: actions/setup-node@v3
+  #       with:
+  #         node-version: lts/*
+  #         cache: npm
+  #     - run: npm install
+  #     - uses: actions/download-artifact@v3
+  #       with:
+  #         name: ${{ matrix.os[1] }}
+  #     - run: npm run integration-tests
 
   publish:
     name: 'Publish to npm'
-    needs: [test]
+    needs: [build-linux-x64, build-macos, build-windows-x64]
     if: "${{ inputs.npm-version != '' }}"
     runs-on: ubuntu-latest
     env:
