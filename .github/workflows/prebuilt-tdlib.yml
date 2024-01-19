@@ -252,7 +252,7 @@ jobs:
       - run: node packages/prebuilt-tdlib/write-tdlib-json.js $TDLIB_COMMIT_HASH $TDLIB_VERSION
       - run: cat packages/prebuilt-tdlib/prebuilds/tdlib.json
       - name: Update version
-        run: npm version ${{ inputs.npm-version }} --no-git-tag-version -w prebuilt-tdlib
+        run: npm version ${{ inputs.npm-version }} --no-git-tag-version -w packages/prebuilt-tdlib
       - name: Publish
         run: |
           if test -z "{{ inputs.npm-tag }}"
