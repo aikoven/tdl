@@ -257,9 +257,9 @@ jobs:
         run: |
           if test -z "{{ inputs.npm-tag }}"
           then
-            npm publish -w prebuilt-tdlib
+            npm publish --access public -w packages/prebuilt-tdlib
           else
-            npm publish --tag ${{ inputs.npm-tag }} -w prebuilt-tdlib
+            npm publish --access public --tag ${{ inputs.npm-tag }} -w packages/prebuilt-tdlib
           fi
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
@@ -267,6 +267,6 @@ jobs:
         run: |
           npm dist-tag add \
             prebuilt-tdlib@${{ inputs.npm-version }} td-$TDLIB_VERSION \
-            -w prebuilt-tdlib
+            -w packages/prebuilt-tdlib
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
